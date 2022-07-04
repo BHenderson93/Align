@@ -40,7 +40,7 @@ export default function ConstructionPage({ user }) {
               </div>
               <div className="flex items-center justify-center gap-x-96 mt-24">
                 <SectionInput section={currentSection} />
-                <ResumeViewer />
+                <ResumeViewer section={currentSection}/>
               </div>
               <StepperNav
                 step={step}

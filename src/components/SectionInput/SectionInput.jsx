@@ -40,8 +40,8 @@ export default function SectionInput({ section }) {
       <div className="inline-block relative w-48 mr-2">
         <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-500">
           <option>Normal</option>
-          <option>Essential</option>
           <option>High Priority</option>
+          <option>Essential</option>
         </select>
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
           <svg

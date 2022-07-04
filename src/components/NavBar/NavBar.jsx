@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logo from './Logo.png'
 
 export default function NavBar({ active, user }) {
   return (
@@ -52,14 +53,10 @@ export default function NavBar({ active, user }) {
             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex-shrink-0 flex items-center">
                 <img
-                  className="block lg:hidden h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                  alt="Workflow"
-                />
-                <img
-                  className="hidden lg:block h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                  alt="Workflow"
+                  className="hidden lg:block"
+                  style={{height:'10vh'}}
+                  src={logo}
+                  alt="Align"
                 />
               </div>
               <div className="hidden sm:block sm:ml-6">
