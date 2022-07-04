@@ -1,53 +1,27 @@
-//need to add sectionContents to construction page state - to hold sectional inputs.
-/* 
-
-Construction page:
-  const [resumeContents , setResumeContents] = useState({
-    personal:null,
-    statement:null,
-    skills:null,
-    projects:null,
-    workHistory:null,
-    education:null
-
-
-Resume Viewer States 1: **Create section feeds these into Resume Viewer one at a time**
-
-const [sectionContents , setSectionContents] = useState({
-    name:{type:String , required:true , min:2 , max:30},
-    email:{type:String , required: true},
-    phone:{type:String , required:true},
-    link1:{type:String , required:false},
-    link2:{type:String , required:false},
-    link3:{type:String , required:false}
-})
-
-RV States 2:
-    title:{type:String, required:false , min:3, max:50},
-    body:{type:String , required:false , min:[10,'Min char length is 10.'] , max:[300 , 'Max char length is 300.'] }
-
-
-
-*/
-
-
 import {React, useState} from 'react'
 import resumeConstructor from './ResumeConstructor' 
 
+const testData = {
+  personal:{
+    name:'Bryce Henderson',
+    email:'PrettyPinkPrincess@CheezeSnail.yum',
+    phone:'360-551-5555',
+    link1:'github.com/bhenderson',
+    link2:'linkedin.com/bhenderson',
+    link3:'bhenderson.com'
+  },
+  statement:{
+    title:'Software Engineer',
+    body:`This is my body. It's a long body because I want to see the page breaks. I'm interested in a job as a software engineer and think that I would do well in that role. So far, I'm enjoying thinking through all these things and seeing my work pop up on a page. This is a long and pointless statement speckled with real thoughts because I'm just writing things so I can see how the text wraps. The end.`
+  },
+  skills:null,
+  projects:null,
+  workHistory:null,
+  education:null
+}
 
 export default function ResumeViewer({section}) {
-  const [contents , setContents] = useState({
-    personal:{
-      name:'Bryce Henderson',
-      email: 'PrettyPinkPrincess@Cheezemail.net',
-      phone:'360-551-5555'
-    },
-    statement:null,
-    skills:null,
-    projects:null,
-    workHistory:null,
-    education:null
-  })
+  const [contents , setContents] = useState(testData)
 
   function handleClick(){
     resumeConstructor(contents)
