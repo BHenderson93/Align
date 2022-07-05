@@ -6,19 +6,53 @@ export default function resumeConstructor(resume) {
 
     //will need to include some sort of algorithmic scoring logic for each line within the docx.
     //alert('in resume constructor')
-    console.log('Constructing from... ' , personal, statement, skills, projects, workHistory, education)
-    const sectPersonal = {
-        properties: {
-            page: {
-                margin: {
-                    top: '0.5in',
-                    right: '0.5in',
-                    bottom: '0.5in',
-                    left: '0.5in',
-                },
+    console.log('Constructing from... ', personal, statement, skills, projects, workHistory, education)
+    const PROPERTIES = {
+        page: {
+            margin: {
+                top: '0.5in',
+                right: '0.5in',
+                bottom: '0.5in',
+                left: '0.5in',
             },
-            type: SectionType.CONTINUOUS,
         },
+        type: SectionType.CONTINUOUS,
+    }
+
+    const HEADER = (headerText) =>{
+        return new Paragraph({
+            alignment: AlignmentType.CENTER,
+            children:[
+                new TextRun({
+                    text: headerText,
+                    size: 48,
+                    bold: true,
+                    color: '009dff',
+                    break: 1,
+                })
+            ]
+        })
+    }
+    const SUBHEADER = (subheaderText) =>{
+        return new Paragraph({
+            alignment: AlignmentType.CENTER,
+            children:[
+                new TextRun({
+                    text: headerText,
+                    size: 36,
+                    bold: true,
+                    color: '009dff',
+                    break: 1,
+                })
+            ]
+        })
+    }
+    const BODY = (bodyText) =>{
+
+    }
+
+    const sectPersonal = {
+        properties: PROPERTIES,
         children: [
             new Paragraph({
                 alignment: AlignmentType.CENTER,
@@ -45,32 +79,17 @@ export default function resumeConstructor(resume) {
     }
 
     const sectStatement = {
-        properties: {
-            page: {
-                margin: {
-                    top: '0.5in',
-                    right: '0.5in',
-                    bottom: '0.5in',
-                    left: '0.5in',
-                },
-            },
-            type: SectionType.CONTINUOUS,
-        },
-        children:[
+        properties:PROPERTIES,
+        children: [
+            HEADER(statement.title), 
             new Paragraph({
-                alignment: AlignmentType.CENTER,
-                children: [
+                alignment: AlignmentType.JUSTIFIED,
+                children:[
                     new TextRun({
-                        text:statement.title,
-                        size:48,
-                        bold:true,
-                        color: '009dff',
-                        break:2,
-                    }),
-                    new TextRun({
-                        text:statement.body,
-                        size:24,
-                        break:1,
+                        text: statement.body,
+                        size: 24,
+                        break: 0,
+                        color:'ff0000'
                     })
                 ]
             })
@@ -78,26 +97,29 @@ export default function resumeConstructor(resume) {
     }
 
     const sectSkills = {
-        properties: {}
+        properties: PROPERTIES,
+        children:[
+            HEADER(sectSkills.title)
+        ]
     }
 
     const sectProjects = {
-        properties: {}
+        properties: PROPERTIES
     }
 
     const sectWorkHistory = {
-        properties: {}
+        properties: PROPERTIES
     }
 
     const sectEducation = {
-        properties: {}
+        properties: PROPERTIES
     }
 
 
 
     const doc = new Document({
-        
-        sections: [ sectPersonal, sectStatement]
+
+        sections: [sectPersonal, sectStatement]
     })
     Packer.toBlob(doc).then((blob) => {
         saveAs(blob, 'blob.docx')
