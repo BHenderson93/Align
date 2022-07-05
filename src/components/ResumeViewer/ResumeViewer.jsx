@@ -16,7 +16,7 @@ const testData = {
   },
   skills:{
     title:'Skills',
-    skills:[]
+    skills:['skill1' , 'skill2' , 'python' , 45 , 'Mongodb' , 'comedy' , 'textwrap case testing' , 'eating' , 'drinking' , 'breathing' , 'sleeping' , 'writing code' , 'procrastinating' , 'RESTful sleeping' , 'Routeful GETting' , 'API']
   },
   projects:null,
   workHistory:null,

@@ -6,7 +6,9 @@ export default function resumeConstructor(resume) {
 
     //will need to include some sort of algorithmic scoring logic for each line within the docx.
     //alert('in resume constructor')
+    
     console.log('Constructing from... ', personal, statement, skills, projects, workHistory, education)
+    
     const PROPERTIES = {
         page: {
             margin: {
@@ -33,12 +35,13 @@ export default function resumeConstructor(resume) {
             ]
         })
     }
+
     const SUBHEADER = (subheaderText) =>{
         return new Paragraph({
             alignment: AlignmentType.CENTER,
             children:[
                 new TextRun({
-                    text: headerText,
+                    text: subheaderText,
                     size: 36,
                     bold: true,
                     color: '009dff',
@@ -47,6 +50,7 @@ export default function resumeConstructor(resume) {
             ]
         })
     }
+
     const BODY = (bodyText) =>{
 
     }
@@ -99,7 +103,18 @@ export default function resumeConstructor(resume) {
     const sectSkills = {
         properties: PROPERTIES,
         children:[
-            HEADER(sectSkills.title)
+            HEADER(skills.title),
+            new Paragraph({
+                alignment: AlignmentType.JUSTIFIED,
+                children:[
+                    new TextRun({
+                        text: skills.skills.join(' | '),
+                        size: 24,
+                        break: 0,
+                        color:'ff0000'
+                    })
+                ]
+            })
         ]
     }
 
@@ -119,7 +134,7 @@ export default function resumeConstructor(resume) {
 
     const doc = new Document({
 
-        sections: [sectPersonal, sectStatement]
+        sections: [sectPersonal, sectStatement , sectSkills]
     })
     Packer.toBlob(doc).then((blob) => {
         saveAs(blob, 'blob.docx')
