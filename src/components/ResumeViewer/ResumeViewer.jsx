@@ -44,8 +44,52 @@ const testData = {
       }
     ]
   },
-  workHistory:null,
-  education:null
+  workHistory:{
+    header:'Work History',
+    subsections:[
+      {
+        subheader:'Pan Handler',
+        dateStart:'May 2022',
+        dateEnd:'Present',
+        lines:[
+          {body:'Handled pans.'},
+          {body:'Occasionally handled pots, despite not being in the job description.'}
+        ]
+      },
+      {
+        subheader:'Software Engineer at Google',
+        dateStart:'May 2016',
+        dateEnd:'May 2022',
+        lines:[
+          {body:'Left job to pursue passion of pan handling.'},
+          {body:'Optimized code and produced $10B in new revenue.'}
+        ]
+      }
+    ]
+  },
+  education:{
+    header:'Education',
+    subsections:[
+      {
+        subheader:'Bachelors of Science in Trying Hard - Harvard',
+        dateStart:'Aug 2012',
+        dateEnd:'May 2022',
+        lines:[
+          {body:'Tried very, very hard.'},
+          {body:'Occasionally received pat on head.'}
+        ]
+      },
+      {
+        subheader:'Software Engineering Certificate - General Assembly',
+        dateStart:'May 2022',
+        dateEnd:'Aug 2022',
+        lines:[
+          {body:'Spent over 419 hours in class studying SWE.'},
+          {body:'By the end, could center a div using position:fixed and turn it red with background:RGB(0,65,65)'}
+        ]
+      }
+    ]
+  }
 }
 
 export default function ResumeViewer({section}) {

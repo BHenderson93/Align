@@ -42,17 +42,13 @@ export default function resumeConstructor(resume) {
             children:[
                 new TextRun({
                     text: subheaderText,
-                    size: 36,
+                    size: 28,
                     bold: true,
-                    color: '009dff',
-                    break: 1,
                 }),
                 /////put math in here to align dates and paragraph on same line.
                 new TextRun({
                     text: `${dateStart}-${dateEnd}`,
-                    size: 36,
-                    bold: true,
-                    color: '009dff',
+                    size: 28,
                 })
             ]
         })
@@ -68,7 +64,6 @@ export default function resumeConstructor(resume) {
     }
 
     const createSectionSubSections = (section)=>{
-        console.log('i got section ' , section)
         let output = [HEADER(section.header)]
 
         for(let subsect of section.subsections){
@@ -148,18 +143,20 @@ export default function resumeConstructor(resume) {
     }
 
     const sectWorkHistory = {
-        properties: PROPERTIES
+        properties: PROPERTIES,
+        children: createSectionSubSections(workHistory)
     }
 
     const sectEducation = {
-        properties: PROPERTIES
+        properties: PROPERTIES,
+        children: createSectionSubSections(education)
     }
 
 
 
     const doc = new Document({
 
-        sections: [sectPersonal, sectStatement , sectSkills , sectProjects]
+        sections: [sectPersonal, sectStatement , sectSkills , sectProjects, sectWorkHistory , sectEducation]
     })
     Packer.toBlob(doc).then((blob) => {
         saveAs(blob, 'blob.docx')
