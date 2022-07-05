@@ -57,6 +57,7 @@ export default function resumeConstructor(resume) {
     const BULLET = (bodyText) =>{
         return new Paragraph({
             text:bodyText,
+            size:24,
             bullet:{
                 level:0
             }
