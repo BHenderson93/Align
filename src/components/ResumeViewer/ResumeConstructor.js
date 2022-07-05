@@ -38,7 +38,7 @@ export default function resumeConstructor(resume) {
 
     const SUBHEADER = (subheaderText , dateStart, dateEnd) =>{
         return new Paragraph({
-            alignment: AlignmentType.CENTER,
+            alignment: AlignmentType.LEFT,
             children:[
                 new TextRun({
                     text: subheaderText,
