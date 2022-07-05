@@ -36,7 +36,7 @@ export default function resumeConstructor(resume) {
         })
     }
 
-    const SUBHEADER = (subheaderText) =>{
+    const SUBHEADER = (subheaderText , dateStart, dateEnd) =>{
         return new Paragraph({
             alignment: AlignmentType.CENTER,
             children:[
@@ -46,13 +46,37 @@ export default function resumeConstructor(resume) {
                     bold: true,
                     color: '009dff',
                     break: 1,
+                }),
+                /////put math in here to align dates and paragraph on same line.
+                new TextRun({
+                    text: `${dateStart}-${dateEnd}`,
+                    size: 36,
+                    bold: true,
+                    color: '009dff',
                 })
             ]
         })
     }
 
-    const BODY = (bodyText) =>{
+    const BULLET = (bodyText) =>{
+        return new Paragraph({
+            text:bodyText,
+            bullet:{
+                level:0
+            }
+        })
+    }
 
+    const createSectionSubSections = (section)=>{
+        console.log('i got section ' , section)
+        let output = [HEADER(section.header)]
+
+        for(let subsect of section.subsections){
+            output.push(SUBHEADER(subsect.subheader, subsect.dateStart, subsect.dateEnd))
+            subsect.lines.forEach((line)=>output.push(BULLET(line.body)))
+        }
+
+        return output
     }
 
     const sectPersonal = {
@@ -85,7 +109,7 @@ export default function resumeConstructor(resume) {
     const sectStatement = {
         properties:PROPERTIES,
         children: [
-            HEADER(statement.title), 
+            HEADER(statement.header), 
             new Paragraph({
                 alignment: AlignmentType.JUSTIFIED,
                 children:[
@@ -103,7 +127,7 @@ export default function resumeConstructor(resume) {
     const sectSkills = {
         properties: PROPERTIES,
         children:[
-            HEADER(skills.title),
+            HEADER(skills.header),
             new Paragraph({
                 alignment: AlignmentType.JUSTIFIED,
                 children:[
@@ -119,7 +143,8 @@ export default function resumeConstructor(resume) {
     }
 
     const sectProjects = {
-        properties: PROPERTIES
+        properties: PROPERTIES,
+        children: createSectionSubSections(projects)
     }
 
     const sectWorkHistory = {
@@ -134,7 +159,7 @@ export default function resumeConstructor(resume) {
 
     const doc = new Document({
 
-        sections: [sectPersonal, sectStatement , sectSkills]
+        sections: [sectPersonal, sectStatement , sectSkills , sectProjects]
     })
     Packer.toBlob(doc).then((blob) => {
         saveAs(blob, 'blob.docx')
