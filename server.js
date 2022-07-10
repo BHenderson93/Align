@@ -16,7 +16,7 @@ app.use(logger('dev'));
 app.use(express.json());
 // Configure both serve-favicon & static
 // middleware to server from the 'build' folder
-app.use(favicon(path.join(__dirname, 'build', 'logo.png')));
+// app.use(favicon(path.join(__dirname, 'build', 'logo.png')));
 app.use(express.static(path.join(__dirname, 'build')));
 
 // Middleware to verify token and assign user object of payload to req.user.
