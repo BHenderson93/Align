@@ -4,6 +4,9 @@ import JobCard from '../../components/JobCard/JobCard';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import * as jobService from '../../utilities/jobs-service'
+import optimizeResume from '../../utilities/helpers/optimizeResume';
+import resumeConstructor from '../../utilities/helpers/ResumeConstructor';
+import {getResume} from '../../utilities/resume-service'
 
 export default function SearchJobs({ user , setUser, getUser, markAsApplied , stopTracking, trackJob, jobsWatched , setResponse}) {
   const [featuredJobs, setFeaturedJobs] = useState(
@@ -21,6 +24,12 @@ export default function SearchJobs({ user , setUser, getUser, markAsApplied , st
     localStorage.setItem('featuredJobs', JSON.stringify([...featuredJobs]));
     localStorage.setItem('searchedKeyword', JSON.stringify(search));
   }, [featuredJobs, search]);
+
+  async function handleClick(keyWordsArr, name) {
+    const userResume = await getResume({ id: user._id });
+    console.log('this was returned for the user resume ', userResume);
+    resumeConstructor(optimizeResume(keyWordsArr,userResume) , name);
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -41,6 +50,7 @@ export default function SearchJobs({ user , setUser, getUser, markAsApplied , st
         resume_link: null,
         job_date_posted: job.publication_date,
         date_applied: null,
+        tags:job.tags,
       });
     });
     setFeaturedJobs(jobConverter);
@@ -101,7 +111,7 @@ export default function SearchJobs({ user , setUser, getUser, markAsApplied , st
                 )}
                 <div className="jobs-div grid grid-cols-3 grid-rows-auto justify-around gap-y-10 gap-x-8" >
                   {featuredJobs.map((job) => (
-                    <JobCard job={job} jobsWatched={jobsWatched} markAsApplied={markAsApplied} trackJob={trackJob} user={user} isFetched={true}/>
+                    <JobCard job={job} handleClick={handleClick} jobsWatched={jobsWatched} markAsApplied={markAsApplied} trackJob={trackJob} user={user} isFetched={true}/>
                   ))}
                 </div>
               </div>

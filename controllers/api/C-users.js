@@ -3,7 +3,6 @@ const AppliedJobs = require('../../models/M-appliedJobs');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-
 function checkToken(req, res) {
   console.log('req.user', req.user);
   res.json(req.exp);

@@ -6,6 +6,10 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { getUser } from '../../utilities/users-service';
 import { updateUserTags } from '../../utilities/users-service';
+import optimizeResume from '../../utilities/helpers/optimizeResume';
+import resumeConstructor from '../../utilities/helpers/ResumeConstructor';
+import {getResume} from '../../utilities/resume-service'
+
 
 export default function FeaturedJobs({
   user,
@@ -54,27 +58,30 @@ export default function FeaturedJobs({
 
           const response = await jobs.json();
 
-          const jobConverter = [];
-          response.jobs.forEach((job) => {
-            jobConverter.push({
-              position: job.title,
-              company: job.company_name,
-              logoUrl: job.company_logo,
-              location: job.candidate_required_location,
-              jobType: job.job_type,
-              job_link: job.url,
-              resume_link: null,
-              job_date_posted: job.publication_date,
-              date_applied: null,
-            });
-          });
-          setFeaturedJobs(jobConverter);
-        }
-      }
-    } catch (error) {
-      console.log(error);
+      const jobConverter = [];
+      response.jobs.forEach((job) => {
+        jobConverter.push({
+          position: job.title,
+          company: job.company_name,
+          logoUrl: job.company_logo,
+          location: job.candidate_required_location,
+          jobType: job.job_type,
+          job_link: job.url,
+          resume_link: null,
+          job_date_posted: job.publication_date,
+          date_applied: null,
+          tags:job.tags
+        });
+      });
+      setFeaturedJobs(jobConverter);
     }
-  }, [user]);
+  }, [])
+
+  async function handleClick(keyWordsArr , name) {
+    const userResume = await getResume({ id: user._id });
+    console.log('this was returned for the user resume ', userResume);
+    resumeConstructor(optimizeResume(keyWordsArr,userResume), name);
+  }
 
   return (
     <Spring
@@ -97,14 +104,7 @@ export default function FeaturedJobs({
               )}
               <div className="jobs-div grid grid-cols-3 grid-rows-auto justify-around gap-y-10 gap-x-8">
                 {featuredJobs.map((job) => (
-                  <JobCard
-                    job={job}
-                    jobsWatched={jobsWatched}
-                    markAsApplied={markAsApplied}
-                    trackJob={trackJob}
-                    user={user}
-                    isFetched={true}
-                  />
+                  <JobCard job={job} jobsWatched={jobsWatched} handleClick={handleClick} markAsApplied={markAsApplied} trackJob={trackJob} user={user} isFetched={true} />
                 ))}
               </div>
             </div>

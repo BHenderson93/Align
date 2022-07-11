@@ -51,7 +51,7 @@ export default function SkillsSection({
           tags: tags,
         },
       ]);
-      setSkill({ _id: '', skill: '', priority: 0 });
+      setSkill({ _id: '', skill: '', priority: 0 , tags:[]});
       setModalIsOpen(true);
       resetFields();
       setTimeout(() => setModalIsOpen(false), 1000);
