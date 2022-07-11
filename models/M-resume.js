@@ -14,7 +14,6 @@ const lineSchema = new Schema({
   body: {
     type: String,
     required: true,
-    max:50
   },
   tags: [{ type: String }],
 });
@@ -31,8 +30,6 @@ const subSectionSchema = new Schema({
   subHeader: {
     type: String,
     required: true,
-    min: [3, 'SubSection header too short. Min 3.'],
-    max: [40, 'SubSection header too long. Max 40.'],
   },
   dateStart: { type: Date, required: false },
   dateEnd: { type: Date, required: false },
@@ -45,8 +42,6 @@ const sectionSchema = new Schema({
   header: {
     type: String,
     required: true,
-    min: [3, 'Section header too short. Min 3.'],
-    max: [20, 'Section header too long. Max 20.'],
   },
   subSections: [subSectionSchema],
 });
@@ -55,8 +50,6 @@ const skillSchema = new Schema({
   skill: {
     type: String,
     required: true,
-    min: 1,
-    max: [20, 'Max skill chars of 20.'],
   },
   priority: { type: Number, required: true, min: 0, max: 2, default: 0 },
   tags:[{type:String}]
@@ -67,14 +60,12 @@ const statementSchema = new Schema({
   body: {
     type: String,
     required: false,
-    min: [10, 'Min char length is 10.'],
-    max: [300, 'Max char length is 300.'],
   },
 });
 
 
 const personalSchema = new Schema({
-  name: { type: String, required: true, min: 2, max: 30 },
+  name: { type: String, required: true},
   email: { type: String, required: true },
   phone: { type: String, required: true },
   link1: { type: String, required: false },
@@ -87,7 +78,7 @@ const resumeSchema = new Schema({
   personal: personalSchema,
   statement: { type: statementSchema, required: false },
   skills: {
-    type: [{ type: skillSchema, required: false , max:100}],
+    type: [{ type: skillSchema, required: false }],
   },
   projects: sectionSchema,
   workHistory: sectionSchema,
