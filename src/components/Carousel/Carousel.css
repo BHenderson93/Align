@@ -22,7 +22,7 @@
     display: grid;
     place-items: center;
     color: grey;
-    cursor: pointer;
+     cursor: pointer;
 }
 
 .carouselInner .center {
@@ -36,14 +36,12 @@
 }
 
 h1 {
-font-size: 5em;
+font-size: 30px;
 }
 
 p {
-font-size: 2em;
+font-size: 30px;
 }
-
-
 
 .carouselInner .right {
     flex: 5%;
