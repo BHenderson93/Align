@@ -11,12 +11,13 @@ export default function JobCard({
   stopTracking,
   isFetched,
   isLoading,
-  jobsWatched
+  jobsWatched,
+  handleClick
 }) {
   let isTracked = false
-  console.log('jobs watched card is ' , jobsWatched)
-  if(isFetched && (jobsWatched.tracked.filter((wJob)=>wJob.job_link === job.job_link).length || jobsWatched.applied.filter((wJob)=>wJob.job_link === job.job_link).length)){
-      isTracked = true
+  console.log('jobs watched card is ', jobsWatched)
+  if (isFetched && (jobsWatched.tracked.filter((wJob) => wJob.job_link === job.job_link).length || jobsWatched.applied.filter((wJob) => wJob.job_link === job.job_link).length)) {
+    isTracked = true
   }
   return (
     <>
@@ -68,7 +69,7 @@ export default function JobCard({
                 </div>
 
                 <div className="flex gap-x-4">
-                  {isFetched && !isTracked? (
+                  {isFetched && !isTracked ? (
                     <>
                       <button
                         className="hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline bg-blue-500 shadow-lg shadow-blue-500/50 transition duration-200 ease-in-out hover:scale-110 mt-14"
@@ -78,7 +79,11 @@ export default function JobCard({
                       >
                         Track this Job
                       </button>
-{/*                       <button
+                      <button
+                        className="btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"
+                        onClick={()=>{
+                          handleClick(job.tags , `${user.name} ${job.position} ${job.company}`)}}>Download Optimized Resume</button>
+                      {/*                       <button
                         className="hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline bg-green-500 shadow-lg shadow-green-500/50 transition duration-200 ease-in-out hover:scale-110 mt-14"
                         onClick={() => {
                           trackJob(job, user._id, true);
@@ -87,7 +92,12 @@ export default function JobCard({
                         Mark as Applied
                       </button> */}
                     </>
-                  ) : job.date_applied === null && !isFetched ? (
+                  ) : isFetched ? 
+                  <button
+                  className="btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"
+                  onClick={()=>{
+                    handleClick(job.tags , `${user.name} ${job.position} ${job.company}`)}}>Download Optimized Resume</button>
+                  : job.date_applied === null && !isFetched ? (
                     <>
                       <button
                         className="hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline bg-red-500 shadow-lg shadow-red-500/50 transition duration-200 ease-in-out hover:scale-110 mt-14"
@@ -105,6 +115,9 @@ export default function JobCard({
                       >
                         Mark as Applied
                       </button>
+                      <button
+                        className="btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"
+                        onClick={handleClick}>Download Optimized Resume</button>
                     </>
                   ) : !isFetched ? (
                     <>
@@ -117,7 +130,7 @@ export default function JobCard({
                         Stop Tracking
                       </button>
                     </>
-                  ): null}
+                  ) : null}
                 </div>
               </div>
             </animated.div>

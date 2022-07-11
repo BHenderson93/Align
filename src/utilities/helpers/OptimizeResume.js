@@ -140,7 +140,7 @@ export default function optimizeResume(jobKeywordList, resume, spaceConstraints 
   }
   //end of create sections function
 
-  output.skills = createSkills(18)
+  output.skills = createSkills(15)
   output.education = createEducation()
   console.log('r space after skills and education', maxLinesSpace - currentSpace)
   let optimalSections = createSections(sectionList)

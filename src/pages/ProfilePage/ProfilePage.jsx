@@ -8,13 +8,37 @@ import { testData , words } from '../../utilities/helpers/optimizeResumeTestData
 import optimizeResume from '../../utilities/helpers/OptimizeResume'
 
 
-export default function AppliedJobsPage({ user , setUser, getUser, markAsApplied , stopTracking, trackJob, jobsWatched , setResponse}) {
+export default function AppliedJobsPage({ user , setUser, getUser, markAsApplied , stopTracking, trackJob, jobsWatched , setResponse, getAppliedJobs, setJobsWatched}) {
 
   async function handleClick() {
     const userResume = await getResume({ id: user._id });
     console.log('this was returned for the user resume ', userResume);
-    resumeConstructor(userResume);
+    resumeConstructor(userResume , `${user.name}_Master_Resume`);
   }
+
+  async function handleClickOptimized(keyWordsArr, name) {
+    const userResume = await getResume({ id: user._id });
+    console.log('this was returned for the user resume ', userResume);
+    resumeConstructor(optimizeResume(keyWordsArr, userResume) , name);
+  }
+
+  useEffect(() => {
+    if(user) {(async function populateJobs() {
+      const jobsWatched = await getAppliedJobs({ id: user._id });
+
+      if (jobsWatched) {
+        const tracked = jobsWatched.appliedJobList.filter(
+          (job) => !job.date_applied
+        );
+        const applied = jobsWatched.appliedJobList.filter(
+          (job) => job.date_applied
+        );
+        setJobsWatched({ tracked: tracked, applied: applied });
+      }
+      console.log('my applied jobs are initially ', jobsWatched);
+    })()}
+  }, [])
+
   return (
     <Spring
       from={{ opacity: 0, marginLeft: -1000 }}
@@ -40,6 +64,7 @@ export default function AppliedJobsPage({ user , setUser, getUser, markAsApplied
                           user={user}
                           stopTracking={stopTracking}
                           isFetched={false}
+                          handleClick={handleClickOptimized}
                         />
                       ))
                     : null}
@@ -69,6 +94,7 @@ export default function AppliedJobsPage({ user , setUser, getUser, markAsApplied
                         user={user}
                         stopTracking={stopTracking}
                         isFetched={false}
+                        handleClick={handleClickOptimized}
                       />
                     ))
                   : null}

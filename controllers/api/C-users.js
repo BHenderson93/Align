@@ -3,12 +3,12 @@ const AppliedJobs = require('../../models/M-appliedJobs')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-
 module.exports = {
   create,
   login,
   checkToken,
   updateUserTags,
+  createJWT,
   createNewJWT
 };
 

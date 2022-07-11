@@ -3,6 +3,7 @@ import sendRequest from './send-request';
 const BASE_URL = '/api/resume';
 
 export function createResume(resume) {
+  console.log('skills from resume API',resume.skills)
   return sendRequest(`${BASE_URL}/`, 'POST', resume);
 }
 
